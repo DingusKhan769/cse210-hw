@@ -1,12 +1,12 @@
 using System;
 
-public class Entry
+public class JournalEntry
 {
     public string Prompt { get; set; }
     public string Response { get; set; }
     public DateTime Date { get; set; }
 
-    public Entry(string prompt, string response)
+    public JournalEntry(string prompt, string response)
     {
         Prompt = prompt;
         Response = response;

@@ -8,13 +8,14 @@ public class Journal
 
     public void AddEntry(string prompt, string response)
     {
-        entries.Add(new JournalEntry { Prompt = prompt, Response = response });
+        entries.Add(new JournalEntry(prompt, response));
     }
 
     public void DisplayEntries()
     {
         foreach (var entry in entries)
         {
+            Console.WriteLine($"Date: {entry.Date.ToShortDateString()}");
             Console.WriteLine($"Prompt: {entry.Prompt}");
             Console.WriteLine($"Response: {entry.Response}\n");
         }
@@ -26,6 +27,7 @@ public class Journal
         {
             foreach (var entry in entries)
             {
+                writer.WriteLine(entry.Date);
                 writer.WriteLine(entry.Prompt);
                 writer.WriteLine(entry.Response);
             }
@@ -39,9 +41,10 @@ public class Journal
         {
             while (!reader.EndOfStream)
             {
+                DateTime date = DateTime.Parse(reader.ReadLine());
                 string prompt = reader.ReadLine();
                 string response = reader.ReadLine();
-                entries.Add(new JournalEntry { Prompt = prompt, Response = response });
+                entries.Add(new JournalEntry(prompt, response) { Date = date });
             }
         }
     }
