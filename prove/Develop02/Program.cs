@@ -21,8 +21,8 @@ class Program
             Console.WriteLine("\nJournal Menu:");
             Console.WriteLine("1. Write a new entry");
             Console.WriteLine("2. Display the journal");
-            Console.WriteLine("3. Save the journal to a file");
-            Console.WriteLine("4. Load the journal from a file");
+            Console.WriteLine("3. Save the journal to a file (CSV or JSON)");
+            Console.WriteLine("4. Load the journal from a file (CSV or JSON)");
             Console.WriteLine("5. Quit");
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
@@ -35,7 +35,9 @@ class Program
                     Console.WriteLine($"\nPrompt: {prompt}");
                     Console.Write("Your response: ");
                     string response = Console.ReadLine();
-                    journal.AddEntry(prompt, response);
+                    Console.Write("Current weather: ");
+                    string weather = Console.ReadLine();
+                    journal.AddEntry(prompt, response, weather);
                     break;
 
                 case "2":
@@ -46,13 +48,17 @@ class Program
                 case "3":
                     Console.Write("Enter the filename to save to: ");
                     string saveFilename = Console.ReadLine();
-                    journal.SaveToFile(saveFilename);
+                    Console.Write("Enter the format (CSV or JSON): ");
+                    string saveFormat = Console.ReadLine();
+                    journal.SaveToFile(saveFilename, saveFormat);
                     break;
 
                 case "4":
                     Console.Write("Enter the filename to load from: ");
                     string loadFilename = Console.ReadLine();
-                    journal.LoadFromFile(loadFilename);
+                    Console.Write("Enter the format (CSV or JSON): ");
+                    string loadFormat = Console.ReadLine();
+                    journal.LoadFromFile(loadFilename, loadFormat);
                     break;
 
                 case "5":
@@ -66,3 +72,10 @@ class Program
         }
     }
 }
+
+/*
+ * Exceeded Requirements:
+ * 1. Added weather information to each journal entry.
+ * 2. Implemented saving and loading journal entries in CSV format.
+ * 3. Implemented saving and loading journal entries in JSON format.
+ */
