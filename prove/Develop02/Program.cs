@@ -1,9 +1,118 @@
 using System;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop02 World!");
+        Journal journal = new Journal();
+        List<string> prompts = new List<string>
+        {
+            "Who was the most interesting person I interacted with today?",
+            "What was the best part of my day?",
+            "How did I see the hand of the Lord in my life today?",
+            "What was the strongest emotion I felt today?",
+            "If I had one thing I could do over today, what would it be?"
+        };
+
+        while (true)
+        {
+            Console.WriteLine("\nJournal Menu:");
+            Console.WriteLine("1. Write a new entry");
+            Console.WriteLine("2. Display the journal");
+            Console.WriteLine("3. Save the journal to a file");
+            Console.WriteLine("4. Load the journal from a file");
+            Console.WriteLine("5. Quit");
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Random random = new Random();
+                    string prompt = prompts[random.Next(prompts.Count)];
+                    Console.WriteLine($"\nPrompt: {prompt}");
+                    Console.Write("Your response: ");
+                    string response = Console.ReadLine();
+                    journal.AddEntry(prompt, response);
+                    break;
+
+                case "2":
+                    Console.WriteLine("\nJournal Entries:");
+                    journal.DisplayEntries();
+                    break;
+
+                case "3":
+                    Console.Write("Enter the filename to save to: ");
+                    string saveFilename = Console.ReadLine();
+                    journal.SaveToFile(saveFilename);
+                    break;
+
+                case "4":
+                    Console.Write("Enter the filename to load from: ");
+                    string loadFilename = Console.ReadLine();
+                    journal.LoadFromFile(loadFilename);
+                    break;
+
+                case "5":
+                    Console.WriteLine("Goodbye!");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
     }
+}
+
+class Journal
+{
+    private List<JournalEntry> entries = new List<JournalEntry>();
+
+    public void AddEntry(string prompt, string response)
+    {
+        entries.Add(new JournalEntry { Prompt = prompt, Response = response });
+    }
+
+    public void DisplayEntries()
+    {
+        foreach (var entry in entries)
+        {
+            Console.WriteLine($"Prompt: {entry.Prompt}");
+            Console.WriteLine($"Response: {entry.Response}\n");
+        }
+    }
+
+    public void SaveToFile(string filename)
+    {
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            foreach (var entry in entries)
+            {
+                writer.WriteLine(entry.Prompt);
+                writer.WriteLine(entry.Response);
+            }
+        }
+    }
+
+    public void LoadFromFile(string filename)
+    {
+        entries.Clear();
+        using (StreamReader reader = new StreamReader(filename))
+        {
+            while (!reader.EndOfStream)
+            {
+                string prompt = reader.ReadLine();
+                string response = reader.ReadLine();
+                entries.Add(new JournalEntry { Prompt = prompt, Response = response });
+            }
+        }
+    }
+}
+
+class JournalEntry
+{
+    public string Prompt { get; set; }
+    public string Response { get; set; }
 }
