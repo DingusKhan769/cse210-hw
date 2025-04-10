@@ -1,54 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-public class Comment
-{
-    public string Commenter { get; set; }
-    public string Text { get; set; }
-
-    public Comment(string commenter, string text)
-    {
-        Commenter = commenter;
-        Text = text;
-    }
-
-    public override string ToString()
-    {
-        return $"{Commenter}: {Text}";
-    }
-}
-
-public class Video
-{
-    public string Title { get; set; }
-    public string Author { get; set; }
-    public int Length { get; set; } // Length in seconds
-    public List<Comment> Comments { get; set; }
-
-    public Video(string title, string author, int length)
-    {
-        Title = title;
-        Author = author;
-        Length = length;
-        Comments = new List<Comment>();
-    }
-
-    public void AddComment(Comment comment)
-    {
-        Comments.Add(comment);
-    }
-
-    public int GetNumberOfComments()
-    {
-        return Comments.Count;
-    }
-
-    public override string ToString()
-    {
-        return $"Title: {Title}, Author: {Author}, Length: {Length} seconds, Comments: {GetNumberOfComments()}";
-    }
-}
-
 public class Program
 {
     public static void Main(string[] args)
